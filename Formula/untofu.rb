@@ -18,12 +18,25 @@ class Untofu < Formula
   #
   # Bottles are keyed to macOS version as well as architecture, so every
   # supported version is listed rather than relying on Homebrew's fallback to an
-  # older tag. All twenty entries are the same file.
+  # older tag. All ten entries are the same file.
   #
   # Claiming macOS 12 from a build made on 26 is not a guess. Package.swift
   # declares `.macOS(.v12)`, which makes the compiler reject any API newer than
   # that — so availability is checked at build time, not hoped for — and the
   # resulting binary reports `minos 12.0` on both slices.
+  bottle do
+    root_url "https://github.com/taggie313/untofu/releases/download/v0.3.0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:    "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, monterey:       "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, ventura:        "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, sonoma:         "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, sequoia:        "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+    sha256 cellar: :any_skip_relocation, tahoe:          "abdba2f382d7156e1574a5ba343820b04e033004881d120849af6e5e2381839a"
+  end
 
   # CoreText's font-request hook is macOS-only, and the C shim links CoreText
   # and CoreFoundation directly.
