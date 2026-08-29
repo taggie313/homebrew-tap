@@ -1,8 +1,8 @@
 class Untofu < Formula
   desc "Supplies missing fonts to any macOS app, on demand"
   homepage "https://untofu.elusive.net"
-  url "https://github.com/taggie313/untofu/releases/download/v0.2.1/untofu-0.2.1.tar.gz"
-  sha256 "3196256d12cd963cde46bbcfaeab621075b9604cda9806eef5dd1bc891e14b3b"
+  url "https://github.com/taggie313/untofu/releases/download/v0.3.0/untofu-0.3.0.tar.gz"
+  sha256 "1f931b0b8a34a06fb6258d431810a01d09463a310eb4ada79d534a9eebb94ce0"
   license "MIT"
   head "https://github.com/taggie313/untofu.git", branch: "main"
 
@@ -24,19 +24,6 @@ class Untofu < Formula
   # declares `.macOS(.v12)`, which makes the compiler reject any API newer than
   # that — so availability is checked at build time, not hoped for — and the
   # resulting binary reports `minos 12.0` on both slices.
-  bottle do
-    root_url "https://github.com/taggie313/untofu/releases/download/v0.2.1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:    "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, monterey:       "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, ventura:        "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, sonoma:         "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, sequoia:        "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-    sha256 cellar: :any_skip_relocation, tahoe:          "9244c182a975fb9bc45d544b45d714bbc3a642f06dc1fd1053ae902a253aa240"
-  end
 
   # CoreText's font-request hook is macOS-only, and the C shim links CoreText
   # and CoreFoundation directly.
