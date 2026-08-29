@@ -24,6 +24,19 @@ class Untofu < Formula
   # declares `.macOS(.v12)`, which makes the compiler reject any API newer than
   # that — so availability is checked at build time, not hoped for — and the
   # resulting binary reports `minos 12.0` on both slices.
+  bottle do
+    root_url "https://github.com/taggie313/untofu/releases/download/v0.3.2"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:    "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, monterey:       "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, ventura:        "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, sonoma:         "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, sequoia:        "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+    sha256 cellar: :any_skip_relocation, tahoe:          "381c5465f374e19313c89996466714c6f838556733d54c837f11874df7a08d43"
+  end
 
   # CoreText's font-request hook is macOS-only, and the C shim links CoreText
   # and CoreFoundation directly.
