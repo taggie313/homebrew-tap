@@ -4,8 +4,8 @@ cask "winbar" do
   # the sha256 below is a placeholder that is deliberately NOT a checksum:
   # installing from the template fails loudly, instead of quietly skipping
   # verification the way `sha256 :no_check` would.
-  version "0.1.1"
-  sha256 "4c0a9db0ec0287d54f7117d1706721e5d20a83e304924eac6f81511295898bed"
+  version "0.2.0"
+  sha256 "4fa889d156a807fab69452ead992bb9552493a5196f8bbe76a993383a269a1ce"
 
   # The same disk image the release page offers for download, not a separate
   # archive for Homebrew: one artifact, so what a cask user installs and what a
