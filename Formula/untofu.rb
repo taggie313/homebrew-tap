@@ -1,8 +1,8 @@
 class Untofu < Formula
   desc "Supplies missing fonts to any macOS app, on demand"
   homepage "https://untofu.elusive.net"
-  url "https://github.com/taggie313/untofu/releases/download/v0.4.10/untofu-0.4.10.tar.gz"
-  sha256 "5a017795c10df263cba7eea50929e45b7c477624d23ba3cf68a747b1115c961e"
+  url "https://github.com/taggie313/untofu/releases/download/v0.4.11/untofu-0.4.11.tar.gz"
+  sha256 "2b5b224be44bd47f877af784c5506e013179c5e5666acd622b7ff2e588b8fa29"
   license "MIT"
   head "https://github.com/taggie313/untofu.git", branch: "main"
 
@@ -24,19 +24,6 @@ class Untofu < Formula
   # declares `.macOS(.v12)`, which makes the compiler reject any API newer than
   # that — so availability is checked at build time, not hoped for — and the
   # resulting binary reports `minos 12.0` on both slices.
-  bottle do
-    root_url "https://github.com/taggie313/untofu/releases/download/v0.4.10"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:    "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, monterey:       "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, ventura:        "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, sequoia:        "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-    sha256 cellar: :any_skip_relocation, tahoe:          "5cdb239a0d05a2915986f0b42d8b5afe091ff574eaaf867b602ab899cd540ddd"
-  end
 
   # CoreText's font-request hook is macOS-only, and the C shim links CoreText
   # and CoreFoundation directly.
@@ -60,9 +47,26 @@ class Untofu < Formula
     #
     # --disable-sandbox: SwiftPM wants to write its own build tree, which
     # Homebrew's build sandbox otherwise denies.
+    #
+    # -platform_version: Swift 6.4's build system stamps the deployment target
+    # (12.0) into the binary as the SDK it was built with. AppKit reads that
+    # field to decide how an application draws and behaves, so without this the
+    # dialogs come out with the controls of a release five years old. 12.0 is
+    # the minimum from Package.swift; the last argument is the SDK really used.
+    sdk = Utils.safe_popen_read("xcrun", "--show-sdk-version").strip
     system "swift", "build", "--disable-sandbox", "--configuration", "release",
-                             "--arch", "arm64", "--arch", "x86_64"
-    bin.install ".build/apple/Products/Release/untofu"
+                             "--arch", "arm64", "--arch", "x86_64",
+                             "-Xlinker", "-platform_version", "-Xlinker", "macos",
+                             "-Xlinker", "12.0", "-Xlinker", sdk
+    # Where the product lands depends on the toolchain: Swift 6.4 moved a
+    # multi-architecture build from .build/apple to .build/out, and a formula
+    # that names only one of them fails to install on the other.
+    built = %w[
+      .build/out/Products/Release/untofu
+      .build/apple/Products/Release/untofu
+    ].find { |candidate| File.exist?(candidate) }
+    odie "swift build finished but left no untofu binary in .build" if built.nil?
+    bin.install built
   end
 
   service do
